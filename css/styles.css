@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Finger+Paint&family=Gluten&display=swap');
+
+body {
+    background-color: #0e4a63;
+    font-family: 'Gluten', cursive;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 2px 2px 8px #000;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+button {
+    font-family: 'Gluten', cursive;
+    border: none;
+    background-color: black;
+    border-radius: 2rem;
+    color: white;
+    padding: 1rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    margin: 1rem;
+}
+
+#content {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#frame {
+    background-color: #136386;
+    max-width: 278px;
+    padding: 0;
+    border: 2px solid #000;
+    border-right: 2px solid #000;
+}
+
+#board {
+    font-family: 'Finger Paint', cursive;
+    font-size: 2rem;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 0;
+    margin: 0;
+}
+
+#board > div {
+    line-height: 90px;
+    height: 90px;
+    width: 90px;
+    position: relative;
+    border: 1px solid #000;
+    text-align: center;
+}
+
+#winner {
+    width: 150px;
+    height: 20px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+#scores {
+    width: 150px;
+    height: 50px;
+    padding: 2rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+@media only screen and (max-width: 360px) {
+    body {
+        font-size: 1rem;
+    }
+
+    h1 {
+        margin-bottom: 0.5rem;
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    #scores {
+        padding-top: 0px;
+        padding-bottom: 1rem;
+    }
+    button {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+  }
