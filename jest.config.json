@@ -1,0 +1,14 @@
+{
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "maxWorkers": "100%",
+    "moduleFileExtensions": [
+        "js",
+        "mjs"
+    ],
+    "transform": {
+        "^.+\\.js$": "babel-jest",
+        "^.+\\.mjs$": "babel-jest"
+    },
+    "testRegex": "((\\.|/*.)(test))\\.js?$"
+}
