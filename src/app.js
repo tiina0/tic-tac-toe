@@ -131,6 +131,8 @@ function reset() {
   playerX.score = 0;
   xScore.textContent = 0;
   oScore.textContent = 0;
+  tieTracker = 0;
+  ties.textContent = "";
   gameOn = true;
   inGameInstructionsHide.style.display = "none";
   inGameInstructionsShow.style.display = "none";
