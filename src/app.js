@@ -132,7 +132,7 @@ function reset() {
   xScore.textContent = 0;
   oScore.textContent = 0;
   tieTracker = 0;
-  ties.textContent = "";
+  ties.textContent = 0;
   winnerdiv.textContent = "";
   gameOn = true;
   inGameInstructionsHide.style.display = "none";
