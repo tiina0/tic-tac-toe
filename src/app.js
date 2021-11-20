@@ -1,11 +1,5 @@
 import isSubset from "./isSubset.mjs";
-
-const playerFactory = (mark) => {
-  const playerMark = mark;
-  const cellIds = [];
-  const score = 0;
-  return { playerMark, cellIds, score };
-};
+import declareWinner from "./declareWinner.mjs"
 
 const startBtn = document.getElementById("start");
 const anotherRoundBtn = document.getElementById("another-round");
@@ -51,7 +45,7 @@ const winningRows = [
 ];
 const ties = document.getElementById("ties");
 let tieTracker = 0;
-let tracker = playerO.playerMark;
+let tracker = playerO.mark;
 let gameOn = true;
 
 function hideInstructions() {
@@ -67,10 +61,10 @@ function game() {
     const idOfCell = element.id;
     element.addEventListener("click", function () {
       if (element.textContent.length < 1 && gameOn) {
-        if (tracker == playerO.playerMark) {
-          this.append(playerX.playerMark);
+        if (tracker == playerO.mark) {
+          this.append(playerX.mark);
           playerX.cellIds.push(idOfCell);
-          tracker = playerX.playerMark;
+          tracker = playerX.mark;
           if (checkArrLengthForTie(playerO.cellIds, playerX.cellIds)) {
             if (checkIfTie()) {
               anotherRoundBtn.style.display = "block";
@@ -80,14 +74,14 @@ function game() {
           if (checkArrLengthForWin(playerO.cellIds, playerX.cellIds)) {
             if (searchForWin(winningRows, playerX.cellIds)) {
               anotherRoundBtn.style.display = "block";
-              declareWinner("X");
+              declareWinner(gameOn, winnerdiv, tracker, "X", playerX, playerO);
               clearPlayerArrays();
             }
           }
         } else {
           playerO.cellIds.push(idOfCell);
-          this.append(playerO.playerMark);
-          tracker = playerO.playerMark;
+          this.append(playerO.mark);
+          tracker = playerO.mark;
           if (checkArrLengthForTie(playerO.cellIds, playerX.cellIds)) {
             if (checkIfTie()) {
               anotherRoundBtn.style.display = "block";
@@ -97,7 +91,7 @@ function game() {
           if (checkArrLengthForWin(playerO.cellIds, playerX.cellIds)) {
             if (searchForWin(winningRows, playerO.cellIds)) {
               anotherRoundBtn.style.display = "block";
-              declareWinner("O");
+              declareWinner(gameOn, winnerdiv, tracker, "O", playerX, playerO);
               clearPlayerArrays();
             }
           }
@@ -140,19 +134,19 @@ function reset() {
   anotherRoundBtn.style.display = "none";
 }
 
-function declareWinner(mark) {
-  gameOn = false;
-  winnerdiv.textContent = `${mark} wins!`;
-  if (mark === "X") {
-    tracker = "O";
-    playerX.score++;
-    xScore.textContent = playerX.score;
-  } else {
-    tracker = "X";
-    playerO.score++;
-    oScore.textContent = playerO.score;
-  }
-}
+// function declareWinner(mark, playerOne, playerTwo) {
+//   gameOn = false;
+//   winnerdiv.textContent = `${mark} wins!`;
+//   if (mark === playerOne.mark) {
+//     tracker = playerTwo.mark;
+//     playerOne.score++;
+//     xScore.textContent = playerOne.score;
+//   } else {
+//     tracker = playerOne.mark;
+//     playerTwo.score++;
+//     oScore.textContent = playerTwo.score;
+//   }
+// }
 
 function clearPlayerArrays() {
   playerX.cellIds = [];
