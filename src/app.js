@@ -1,10 +1,5 @@
 import isSubset from "./isSubset.mjs";
-
-const playerFactory = (mark) => {
-  const cellIds = [];
-  const score = 0;
-  return { mark, cellIds, score };
-};
+import declareWinner from "./declareWinner.mjs"
 
 const startBtn = document.getElementById("start");
 const anotherRoundBtn = document.getElementById("another-round");
@@ -79,7 +74,7 @@ function game() {
           if (checkArrLengthForWin(playerO.cellIds, playerX.cellIds)) {
             if (searchForWin(winningRows, playerX.cellIds)) {
               anotherRoundBtn.style.display = "block";
-              declareWinner("X", playerX, playerO);
+              declareWinner(gameOn, winnerdiv, tracker, "X", playerX, playerO);
               clearPlayerArrays();
             }
           }
@@ -96,7 +91,7 @@ function game() {
           if (checkArrLengthForWin(playerO.cellIds, playerX.cellIds)) {
             if (searchForWin(winningRows, playerO.cellIds)) {
               anotherRoundBtn.style.display = "block";
-              declareWinner("O", playerX, playerO);
+              declareWinner(gameOn, winnerdiv, tracker, "O", playerX, playerO);
               clearPlayerArrays();
             }
           }
@@ -139,19 +134,19 @@ function reset() {
   anotherRoundBtn.style.display = "none";
 }
 
-function declareWinner(mark, playerOne, playerTwo) {
-  gameOn = false;
-  winnerdiv.textContent = `${mark} wins!`;
-  if (mark === playerOne.mark) {
-    tracker = playerTwo.mark;
-    playerOne.score++;
-    xScore.textContent = playerOne.score;
-  } else {
-    tracker = playerOne.mark;
-    playerTwo.score++;
-    oScore.textContent = playerTwo.score;
-  }
-}
+// function declareWinner(mark, playerOne, playerTwo) {
+//   gameOn = false;
+//   winnerdiv.textContent = `${mark} wins!`;
+//   if (mark === playerOne.mark) {
+//     tracker = playerTwo.mark;
+//     playerOne.score++;
+//     xScore.textContent = playerOne.score;
+//   } else {
+//     tracker = playerOne.mark;
+//     playerTwo.score++;
+//     oScore.textContent = playerTwo.score;
+//   }
+// }
 
 function clearPlayerArrays() {
   playerX.cellIds = [];
