@@ -7,6 +7,32 @@ const playerFactory = (mark) => {
   return { playerMark, cellIds, score };
 };
 
+const startBtn = document.getElementById("start");
+const anotherRoundBtn = document.getElementById("another-round");
+const resetBtn = document.getElementById("reset");
+const instructions = document.getElementById("instructions");
+const gameBoard = document.getElementById("board-and-buttons");
+const inGameInstructionsShow = document.getElementById(
+  "instructions-ingame-show"
+);
+const inGameInstructionsHide = document.getElementById(
+  "instructions-ingame-hide"
+);
+
+startBtn.addEventListener("click", game);
+anotherRoundBtn.addEventListener("click", anotherRound);
+resetBtn.addEventListener("click", reset);
+inGameInstructionsShow.addEventListener("click", function () {
+  inGameInstructionsShow.style.display = "none";
+  instructions.style.display = "block";
+  inGameInstructionsHide.style.display = "block";
+});
+inGameInstructionsHide.addEventListener("click", function () {
+  inGameInstructionsShow.style.display = "block";
+  instructions.style.display = "none";
+  inGameInstructionsHide.style.display = "none";
+});
+
 const playerX = playerFactory("X");
 const playerO = playerFactory("O");
 const gameBoardCells = document.querySelectorAll(".cell");
@@ -27,70 +53,99 @@ const ties = document.getElementById("ties");
 let tieTracker = 0;
 let tracker = playerO.playerMark;
 let gameOn = true;
-let winner = "";
 
-gameBoardCells.forEach((element) => {
-  const idOfCell = element.id;
-  element.addEventListener("click", function () {
-    if (element.textContent.length < 1 && gameOn) {
-      if (tracker == playerO.playerMark) {
-        this.append(playerX.playerMark);
-        playerX.cellIds.push(idOfCell);
-        tracker = playerX.playerMark;
-        if (checkArrLengthForTie(playerO.cellIds, playerX.cellIds)) {
-          if (checkIfTie()) {
-            clearPlayerArrays();
-            clearBoard();
+function hideInstructions() {
+  inGameInstructionsShow.style.display = "block";
+  instructions.style.display = "none";
+  startBtn.style.display = "none";
+  gameBoard.style.display = "block";
+}
+
+function game() {
+  hideInstructions();
+  gameBoardCells.forEach((element) => {
+    const idOfCell = element.id;
+    element.addEventListener("click", function () {
+      if (element.textContent.length < 1 && gameOn) {
+        if (tracker == playerO.playerMark) {
+          this.append(playerX.playerMark);
+          playerX.cellIds.push(idOfCell);
+          tracker = playerX.playerMark;
+          if (checkArrLengthForTie(playerO.cellIds, playerX.cellIds)) {
+            if (checkIfTie()) {
+              anotherRoundBtn.style.display = "block";
+              clearPlayerArrays();
+            }
           }
-        }
-        if (checkArrLengthForWin(playerO.cellIds, playerX.cellIds)) {
-          if (searchForWin(winningRows, playerX.cellIds)) {
-            declareWinner("X", winner);
-            clearPlayerArrays();
-            clearBoard();
+          if (checkArrLengthForWin(playerO.cellIds, playerX.cellIds)) {
+            if (searchForWin(winningRows, playerX.cellIds)) {
+              anotherRoundBtn.style.display = "block";
+              declareWinner("X");
+              clearPlayerArrays();
+            }
           }
-        }
-      } else {
-        playerO.cellIds.push(idOfCell);
-        this.append(playerO.playerMark);
-        tracker = playerO.playerMark;
-        if (checkArrLengthForTie(playerO.cellIds, playerX.cellIds)) {
-          if (checkIfTie()) {
-            clearPlayerArrays();
-            clearBoard();
+        } else {
+          playerO.cellIds.push(idOfCell);
+          this.append(playerO.playerMark);
+          tracker = playerO.playerMark;
+          if (checkArrLengthForTie(playerO.cellIds, playerX.cellIds)) {
+            if (checkIfTie()) {
+              anotherRoundBtn.style.display = "block";
+              clearPlayerArrays();
+            }
           }
-        }
-        if (checkArrLengthForWin(playerO.cellIds, playerX.cellIds)) {
-          if (searchForWin(winningRows, playerO.cellIds)) {
-            declareWinner("O", winner);
-            clearPlayerArrays();
-            clearBoard();
+          if (checkArrLengthForWin(playerO.cellIds, playerX.cellIds)) {
+            if (searchForWin(winningRows, playerO.cellIds)) {
+              anotherRoundBtn.style.display = "block";
+              declareWinner("O");
+              clearPlayerArrays();
+            }
           }
         }
       }
-    }
-  });
-});
-
-function clearBoard() {
-  setTimeout(function () {
-    gameOn = true;
-    winnerdiv.textContent = "";
-    gameBoardCells.forEach((element) => {
-      element.textContent = "";
     });
-  }, 1000);
+  });
 }
 
-function declareWinner(mark, winner) {
+function anotherRound() {
+  anotherRoundBtn.style.display = "none";
+  clearBoard();
+  winnerdiv.textContent = "";
+  game();
+  gameOn = true;
+}
+
+function clearBoard() {
+  gameBoardCells.forEach((element) => {
+    element.textContent = "";
+  });
+}
+
+function reset() {
+  clearPlayerArrays();
+  clearBoard();
+  gameBoard.style.display = "none";
+  instructions.style.display = "initial";
+  startBtn.style.display = "initial";
+  playerO.score = 0;
+  playerX.score = 0;
+  xScore.textContent = 0;
+  oScore.textContent = 0;
+  gameOn = true;
+  inGameInstructionsHide.style.display = "none";
+  inGameInstructionsShow.style.display = "none";
+  anotherRoundBtn.style.display = "none";
+}
+
+function declareWinner(mark) {
   gameOn = false;
   winnerdiv.textContent = `${mark} wins!`;
   if (mark === "X") {
-    winner = "X";
+    tracker = "O";
     playerX.score++;
     xScore.textContent = playerX.score;
   } else {
-    winner = "O";
+    tracker = "X";
     playerO.score++;
     oScore.textContent = playerO.score;
   }
@@ -117,6 +172,7 @@ function checkIfTie() {
     !searchForWin(winningRows, playerO.cellIds)
   ) {
     winnerdiv.textContent = "It's a TIE!";
+    tracker = "O";
     gameOn = false;
     tieTracker++;
     ties.textContent = tieTracker;

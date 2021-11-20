@@ -13,31 +13,47 @@
 
     <div id="content">
         <h1>Tic-tac-toe</h1>
+        <p id="instructions-ingame-show" class="instructions-class">Show instructions</p>
+        <p id="instructions-ingame-hide" class="instructions-class">Hide instructions</p>
 
-        <h2 id="instructions">X starts the game</h2>
+        <div id="instructions">
+            <h2>Instructions</h2>
+            <p>The first player to get three of their marks, i.e. X or O in a row either horizontally, vertically or diagonally is the winner.</p>
+            <p>X starts the first round, the winner of each round the next one.</p>
+            <p>In case of a tie, X starts the next round.</p>
+        </div>
 
-        <div id="frame">
-            <div id="board">
-                <div id="a1" class="cell"></div>
-                <div id="a2" class="cell"></div>
-                <div id="a3" class="cell"></div>
-                <div id="b1" class="cell"></div>
-                <div id="b2" class="cell"></div>
-                <div id="b3" class="cell"></div>
-                <div id="c1" class="cell"></div>
-                <div id="c2" class="cell"></div>
-                <div id="c3" class="cell"></div>
+        <button id="start">Start</button>
+
+        <div id="board-and-buttons">
+            <div id="frame">
+                <div id="board">
+                    <div id="a1" class="cell"></div>
+                    <div id="a2" class="cell"></div>
+                    <div id="a3" class="cell"></div>
+                    <div id="b1" class="cell"></div>
+                    <div id="b2" class="cell"></div>
+                    <div id="b3" class="cell"></div>
+                    <div id="c1" class="cell"></div>
+                    <div id="c2" class="cell"></div>
+                    <div id="c3" class="cell"></div>
+                </div>
             </div>
+
+            <div id="winner"></div>
+
+            <div id="scores">
+                <div>X Score: <span id="xScore"></span></div>
+                <div>O Score: <span id="oScore"></span></div>
+                <div>Ties: <span id="ties"></span></div>
+            </div>
+
+            <div id="buttons">
+                <button id="another-round" class="fadeInAndOut">Another round?</button>
+                <button id="reset">Reset</button>
+            </div>
+
         </div>
-
-        <div id="winner"></div>
-
-        <div id="scores">
-            <div>X Score: <span id="xScore"></span></div>
-            <div>O Score: <span id="oScore"></span></div>
-            <div>Ties: <span id="ties"></span></div>
-        </div>
-
     </div>
 
     <script type="module" src="src/app.js"></script>
